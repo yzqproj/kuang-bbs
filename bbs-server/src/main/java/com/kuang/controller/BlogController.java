@@ -11,16 +11,18 @@ import com.kuang.service.BlogService;
 import com.kuang.service.CommentService;
 import com.kuang.utils.KuangUtils;
 import com.kuang.model.vo.QuestionWriteForm;
+import com.kuang.utils.RequestHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author 遇见狂神说
@@ -38,18 +40,18 @@ public class BlogController {
 
     // 列表展示
     @GetMapping("/blog")
-    public String blogList(Model model){
+    public String blogList(Model model) {
 
         Page<Blog> pageParam = new Page<>(1, 10);
-        blogService.page(pageParam,new QueryWrapper<Blog>().orderByDesc("gmt_create"));
+        blogService.page(pageParam, new QueryWrapper<Blog>().orderByDesc("gmt_create"));
         // 结果
         List<Blog> blogList = pageParam.getRecords();
-        model.addAttribute("blogList",blogList);
-        model.addAttribute("pageParam",pageParam);
+        model.addAttribute("blogList", blogList);
+        model.addAttribute("pageParam", pageParam);
 
         // 分类信息
         List<BlogCategory> categoryList = blogCategoryService.list(null);
-        model.addAttribute("categoryList",categoryList);
+        model.addAttribute("categoryList", categoryList);
 
         return "blog/list";
     }
@@ -58,36 +60,36 @@ public class BlogController {
     public String blogListPage(
             @PathVariable int page,
             @PathVariable int limit,
-            Model model){
+            Model model) {
 
-        if (page < 1){
+        if (page < 1) {
             page = 1;
         }
         Page<Blog> pageParam = new Page<>(page, limit);
-        blogService.page(pageParam,new QueryWrapper<Blog>().orderByDesc("gmt_create"));
+        blogService.page(pageParam, new QueryWrapper<Blog>().orderByDesc("gmt_create"));
 
         // 结果
         List<Blog> blogList = pageParam.getRecords();
-        model.addAttribute("blogList",blogList);
-        model.addAttribute("pageParam",pageParam);
+        model.addAttribute("blogList", blogList);
+        model.addAttribute("pageParam", pageParam);
 
         // 分类信息
         List<BlogCategory> categoryList = blogCategoryService.list(null);
-        model.addAttribute("categoryList",categoryList);
+        model.addAttribute("categoryList", categoryList);
 
         return "blog/list";
     }
 
     // 写文章
     @GetMapping("/blog/write")
-    public String toWrite(Model model){
+    public String toWrite(Model model) {
         List<BlogCategory> categoryList = blogCategoryService.list(null);
-        model.addAttribute("categoryList",categoryList);
+        model.addAttribute("categoryList", categoryList);
         return "blog/write";
     }
 
     @PostMapping("/blog/write")
-    public synchronized String write(QuestionWriteForm questionWriteForm){
+    public synchronized String write(QuestionWriteForm questionWriteForm) {
         // 构建问题对象
         Blog blog = new Blog();
 
@@ -115,44 +117,60 @@ public class BlogController {
 
     // 阅读文章
     @GetMapping("/blog/read/{bid}")
-    public String read(@PathVariable("bid") String bid,Model model){
+    public String read(@PathVariable("bid") String bid, Model model) {
         Blog blog = blogService.getOne(new QueryWrapper<Blog>().eq("bid", bid));
         // todo: redis缓存. 防止阅读重复
-        blog.setViews(blog.getViews()+1);
+        blog.setViews(blog.getViews() + 1);
         blogService.updateById(blog);
-        model.addAttribute("blog",blog);
+        model.addAttribute("blog", blog);
         // todo： 查询评论
         List<Comment> commentList = commentService.list(new QueryWrapper<Comment>().eq("topic_id", bid).orderByDesc("gmt_create"));
-        model.addAttribute("commentList",commentList);
+        model.addAttribute("commentList", commentList);
         return "blog/read";
     }
 
     // 编辑问题
     @GetMapping("/blog/editor/{uid}/{bid}")
     public synchronized String toEditor(@PathVariable("uid") String uid,
-                           @PathVariable("bid") String bid,Model model){
+                                        @PathVariable("bid") String bid, Model model) {
 
         Blog blog = blogService.getOne(new QueryWrapper<Blog>().eq("bid", bid));
 
-        if (!blog.getAuthorId().equals(uid)){
+        if (!blog.getAuthorId().equals(uid)) {
             KuangUtils.print("禁止非法编辑");
             return "redirect:/blog";
         }
 
-        model.addAttribute("blog",blog);
+        model.addAttribute("blog", blog );
 
         List<BlogCategory> categoryList = blogCategoryService.list(null);
-        model.addAttribute("categoryList",categoryList);
+        model.addAttribute("categoryList", categoryList);
 
         return "blog/editor";
     }
-    @GetMapping("/blog/{blogId}")
-    public Blog getBlogById(){
 
+    @GetMapping("/blog/{blogId}")
+    @ResponseBody
+    public HashMap<String, Object> getBlogById(@PathVariable("blogId") String blogId) {
+
+        Blog blog = blogService.getOne(new QueryWrapper<Blog>().eq("bid", blogId));
+        String userId = RequestHelper.getSessionUser().getUid();
+        if (!blog.getAuthorId().equals(userId)) {
+            KuangUtils.print("禁止非法编辑");
+            return null;
+        }
+
+
+        List<BlogCategory> categoryList = blogCategoryService.list(null);
+        HashMap<String, Object> res = new HashMap<>(2);
+        res.put("blog", blog);
+        res.put("categoryList", categoryList);
+
+        return res;
     }
 
     @PostMapping("/blog/editor")
-    public String editor(Blog blog){
+    public String editor(Blog blog) {
         Blog queryBlog = blogService.getOne(new QueryWrapper<Blog>().eq("bid", blog.getBid()));
 
         queryBlog.setTitle(blog.getTitle());
@@ -162,17 +180,17 @@ public class BlogController {
 
         blogService.updateById(queryBlog);
 
-        return "redirect:/blog/read/"+blog.getBid();
+        return "redirect:/blog/read/" + blog.getBid();
     }
 
     // 删除问题
     @GetMapping("/blog/delete/{uid}/{bid}")
     public String delete(@PathVariable("uid") String uid,
-                         @PathVariable("bid") String bid){
+                         @PathVariable("bid") String bid) {
 
         Blog blog = blogService.getOne(new QueryWrapper<Blog>().eq("bid", bid));
 
-        if (!blog.getAuthorId().equals(uid)){
+        if (!blog.getAuthorId().equals(uid)) {
             KuangUtils.print("禁止非法删除");
             return "redirect:/blog";
         }
@@ -184,17 +202,15 @@ public class BlogController {
 
     // 评论
     @PostMapping("/blog/comment/{bid}")
-    public String comment(@PathVariable("bid") String bid, Comment comment){
+    public String comment(@PathVariable("bid") String bid, Comment comment) {
         // 存储评论
         comment.setCommentId(KuangUtils.getUuid());
         comment.setTopicCategory(1);
         comment.setGmtCreate(KuangUtils.getTime());
         commentService.save(comment);
         // 重定向到列表页面
-        return "redirect:/blog/read/"+bid;
+        return "redirect:/blog/read/" + bid;
     }
-
-
 
 
 }

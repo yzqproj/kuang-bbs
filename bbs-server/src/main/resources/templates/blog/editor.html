@@ -35,35 +35,34 @@
     <b-container role="main" class="container mt-3 p-3 bg-white rounded">
         <b-row class="row">
             <b-col class="col-md-12 blog-main">
-                <div class="col-md-12 order-md-1">
+                <b-col class="col-md-12 order-md-1">
                     <h4 class="mb-3">编辑博客</h4>
 
                     <form class="needs-validation" th:action="@{/blog/editor}" method="post">
                         <!-- 隐藏域 -->
-                        <input type="hidden" name="bid" th:value="${blog.getBid()}">
+
 
                         <div class="row">
                             <div class="col-md-10 mb-3">
                                 <label for="firstName">博客标题</label>
-                                <b-form-input required th:value="${blog.getTitle()}" name="title" type="text"
+                                <b-form-input required  v-model="formData.title" name="title" type="text"
                                               class="form-control" id="firstName"/>
                             </div>
 
                             <div class="col-md-2 mb-3">
                                 <label for="country">标签</label>
-                                <select name="categoryId" class="custom-select d-block w-100" id="country">
+                                <b-form-select name="categoryId" class="custom-select d-block w-100" id="country">
                                     <option th:each="category:${categoryList}"
                                             th:selected="${blog.getCategoryId() == category.getId()}"
                                             th:value="${category.getId()}" th:text="${category.getCategory()}">
                                     </option>
-                                </select>
+                                </b-form-select>
                             </div>
 
                             <div class="col-md-12 mb-3">
                                 <p>博客详情</p>
                                 <div id="blog-content">
-                                    <textarea required name="content" th:text="${blog.getContent()}" id="content"
-                                              style="display:none;" rows="3" class="form-control"> </textarea>
+
                                 </div>
                             </div>
 
@@ -71,7 +70,7 @@
 
                         <button class="btn btn-primary btn-lg btn-block" type="submit">提交修改</button>
                     </form>
-                </div>
+                </b-col>
             </b-col>
         </b-row>
     </b-container>
@@ -91,8 +90,17 @@
     new Vue({
         data() {
             return {
-                formData: {}
+                formData: {
+                    bid: "[[${blog.getBid()}]]",
+                    title: "[[${blog.getTitle()}]]",
+                    categoryId:"[[${blog.getCategoryId()}]]",
+                    content:"[[${blog.getContent()}]]",
+                },
+                categoryList: [],
+                options:[[${categoryList}]]
             }
+        }, created() {
+
         }
     }).$mount("#app")
 
