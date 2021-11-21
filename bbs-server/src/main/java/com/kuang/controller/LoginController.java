@@ -1,14 +1,14 @@
 package com.kuang.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.kuang.pojo.Invite;
-import com.kuang.pojo.User;
-import com.kuang.pojo.UserInfo;
+import com.kuang.model.entity.Invite;
+import com.kuang.model.entity.User;
+import com.kuang.model.entity.UserInfo;
 import com.kuang.service.InviteService;
 import com.kuang.service.UserInfoService;
 import com.kuang.service.UserService;
 import com.kuang.utils.KuangUtils;
-import com.kuang.vo.RegisterForm;
+import com.kuang.model.vo.RegisterForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;

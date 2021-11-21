@@ -1,6 +1,6 @@
 package com.kuang.mapper;
 
-import com.kuang.pojo.UserRole;
+import com.kuang.model.entity.UserRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

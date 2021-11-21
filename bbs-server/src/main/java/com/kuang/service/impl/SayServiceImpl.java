@@ -1,6 +1,6 @@
 package com.kuang.service.impl;
 
-import com.kuang.pojo.Say;
+import com.kuang.model.entity.Say;
 import com.kuang.mapper.SayMapper;
 import com.kuang.service.SayService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

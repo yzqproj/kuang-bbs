@@ -1,6 +1,6 @@
 package com.kuang.service.impl;
 
-import com.kuang.pojo.UserRole;
+import com.kuang.model.entity.UserRole;
 import com.kuang.mapper.UserRoleMapper;
 import com.kuang.service.UserRoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

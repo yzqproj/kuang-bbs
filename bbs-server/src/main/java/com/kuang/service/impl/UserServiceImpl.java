@@ -1,9 +1,9 @@
 package com.kuang.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.kuang.pojo.User;
+import com.kuang.model.entity.User;
 import com.kuang.mapper.UserMapper;
-import com.kuang.pojo.UserRole;
+import com.kuang.model.entity.UserRole;
 import com.kuang.service.UserRoleService;
 import com.kuang.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

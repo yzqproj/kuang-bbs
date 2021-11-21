@@ -1,4 +1,4 @@
-package com.kuang.pojo;
+package com.kuang.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;

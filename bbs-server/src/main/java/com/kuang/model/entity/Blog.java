@@ -1,7 +1,9 @@
-package com.kuang.pojo;
+package com.kuang.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
+
+import java.io.Serial;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
@@ -16,32 +18,30 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author 遇见狂神说
- * @since 2020-06-28
+ * @since 2020-06-29
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("ks_question")
-@Schema(name="Question对象", description="")
-public class Question implements Serializable {
+@TableName("ks_blog")
+@Schema(name="Blog对象", description="")
+public class Blog implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Schema(name = "自增id")
     @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    private Long id;
 
-    @Schema(name = "问题id")
-    private String qid;
+    @Schema(name = "博客id")
+    private String bid;
 
-    @Schema(name = "问题标题")
+    @Schema(name = "博客标题")
     private String title;
 
-    @Schema(name = "问题内容")
+    @Schema(name = "博客内容")
     private String content;
-
-    @Schema(name = "状态 0 未解决 1 已解决")
-    private Integer status;
 
     @Schema(name = "排序 0 普通  1 置顶")
     private Integer sort;

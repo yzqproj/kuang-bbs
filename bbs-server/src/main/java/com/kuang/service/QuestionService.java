@@ -1,6 +1,6 @@
 package com.kuang.service;
 
-import com.kuang.pojo.Question;
+import com.kuang.model.entity.Question;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

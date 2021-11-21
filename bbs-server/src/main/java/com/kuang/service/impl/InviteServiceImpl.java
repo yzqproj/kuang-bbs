@@ -1,6 +1,6 @@
 package com.kuang.service.impl;
 
-import com.kuang.pojo.Invite;
+import com.kuang.model.entity.Invite;
 import com.kuang.mapper.InviteMapper;
 import com.kuang.service.InviteService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

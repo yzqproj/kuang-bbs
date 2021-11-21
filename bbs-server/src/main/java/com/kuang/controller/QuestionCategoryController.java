@@ -3,8 +3,8 @@ package com.kuang.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.kuang.pojo.Question;
-import com.kuang.pojo.QuestionCategory;
+import com.kuang.model.entity.Question;
+import com.kuang.model.entity.QuestionCategory;
 import com.kuang.service.QuestionCategoryService;
 import com.kuang.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;

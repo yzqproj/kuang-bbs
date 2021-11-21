@@ -2,16 +2,12 @@ package com.kuang.controller;
 
 
 import com.kuang.mapper.DownloadMapper;
-import com.kuang.pojo.Download;
-import com.kuang.service.DownloadService;
+import com.kuang.model.entity.Download;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 

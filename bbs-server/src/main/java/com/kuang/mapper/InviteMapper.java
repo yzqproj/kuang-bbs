@@ -1,6 +1,6 @@
 package com.kuang.mapper;
 
-import com.kuang.pojo.Invite;
+import com.kuang.model.entity.Invite;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

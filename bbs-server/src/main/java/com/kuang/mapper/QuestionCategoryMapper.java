@@ -1,6 +1,6 @@
 package com.kuang.mapper;
 
-import com.kuang.pojo.QuestionCategory;
+import com.kuang.model.entity.QuestionCategory;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

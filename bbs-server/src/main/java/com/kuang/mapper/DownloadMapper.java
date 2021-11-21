@@ -1,6 +1,6 @@
 package com.kuang.mapper;
 
-import com.kuang.pojo.Download;
+import com.kuang.model.entity.Download;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;
 

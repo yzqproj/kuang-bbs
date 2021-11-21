@@ -1,6 +1,6 @@
 package com.kuang.service.impl;
 
-import com.kuang.pojo.UserInfo;
+import com.kuang.model.entity.UserInfo;
 import com.kuang.mapper.UserInfoMapper;
 import com.kuang.service.UserInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

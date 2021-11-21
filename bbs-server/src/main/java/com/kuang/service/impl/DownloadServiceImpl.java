@@ -1,6 +1,6 @@
 package com.kuang.service.impl;
 
-import com.kuang.pojo.Download;
+import com.kuang.model.entity.Download;
 import com.kuang.mapper.DownloadMapper;
 import com.kuang.service.DownloadService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

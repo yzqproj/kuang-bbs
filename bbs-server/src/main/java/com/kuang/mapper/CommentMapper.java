@@ -1,6 +1,6 @@
 package com.kuang.mapper;
 
-import com.kuang.pojo.Comment;
+import com.kuang.model.entity.Comment;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

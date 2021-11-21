@@ -1,6 +1,6 @@
 package com.kuang.service;
 
-import com.kuang.pojo.BlogCategory;
+import com.kuang.model.entity.BlogCategory;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

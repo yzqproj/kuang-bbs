@@ -1,6 +1,6 @@
 package com.kuang.mapper;
 
-import com.kuang.pojo.UserInfo;
+import com.kuang.model.entity.UserInfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

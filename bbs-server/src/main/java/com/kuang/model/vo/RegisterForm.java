@@ -1,4 +1,4 @@
-package com.kuang.vo;
+package com.kuang.model.vo;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

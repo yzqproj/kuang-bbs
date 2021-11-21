@@ -1,6 +1,6 @@
 package com.kuang.service.impl;
 
-import com.kuang.pojo.QuestionCategory;
+import com.kuang.model.entity.QuestionCategory;
 import com.kuang.mapper.QuestionCategoryMapper;
 import com.kuang.service.QuestionCategoryService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

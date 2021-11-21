@@ -2,7 +2,7 @@ package com.kuang.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.kuang.pojo.Say;
+import com.kuang.model.entity.Say;
 import com.kuang.service.SayService;
 import com.kuang.utils.KuangUtils;
 import org.springframework.beans.factory.annotation.Autowired;

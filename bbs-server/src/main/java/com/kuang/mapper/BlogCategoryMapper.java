@@ -1,6 +1,6 @@
 package com.kuang.mapper;
 
-import com.kuang.pojo.BlogCategory;
+import com.kuang.model.entity.BlogCategory;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
