@@ -38,16 +38,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // 访问权限
         http.authorizeRequests()
                 .antMatchers("/", "/index").permitAll()
-                .antMatchers("/register", "/login", "/toLogin","/swagger-ui/**","/swagger-ui.html").permitAll()
+                .antMatchers("/register", "/login",  "/swagger-ui/**","/swagger-ui.html").permitAll()
                 .antMatchers("/*").authenticated();
 
         // 登录配置
-        http.formLogin()
-                .usernameParameter("username")
-                .passwordParameter("password")
-                .loginPage("/toLogin")
-                .loginProcessingUrl("/login") // 登陆表单提交请求
-                .defaultSuccessUrl("/index"); // 设置默认登录成功后跳转的页面
+        //http.formLogin()
+        //        .usernameParameter("username")
+        //        .passwordParameter("password")
+        //        .loginPage("/toLogin")
+        //        .loginProcessingUrl("/login") // 登陆表单提交请求
+        //        .defaultSuccessUrl("/index"); // 设置默认登录成功后跳转的页面
 
         // 注销配置
         http.headers().contentTypeOptions().disable();

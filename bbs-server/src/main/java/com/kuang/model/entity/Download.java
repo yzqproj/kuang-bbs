@@ -2,6 +2,7 @@ package com.kuang.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 
+import java.io.Serial;
 import java.io.Serializable;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -23,6 +24,7 @@ import lombok.experimental.Accessors;
 @Schema(name="Download对象", description="")
 public class Download implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Schema(name = "资源名")

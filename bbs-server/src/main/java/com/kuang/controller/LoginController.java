@@ -1,24 +1,27 @@
 package com.kuang.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.kuang.model.entity.Invite;
 import com.kuang.model.entity.User;
 import com.kuang.model.entity.UserInfo;
+import com.kuang.model.vo.LoginForm;
 import com.kuang.service.InviteService;
 import com.kuang.service.UserInfoService;
 import com.kuang.service.UserService;
+import com.kuang.utils.JwtUtil;
 import com.kuang.utils.KuangUtils;
 import com.kuang.model.vo.RegisterForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.Objects;
 
 @RestController
 @RequestMapping
@@ -36,47 +39,61 @@ public class LoginController {
         return "index";
     }
 
-    @GetMapping("/toLogin")
-    public String toLogin(){
-        return "login";
+
+    @PostMapping("/login")
+    public String login(@RequestBody LoginForm loginForm){
+        BCryptPasswordEncoder bCryptPasswordEncoder=new BCryptPasswordEncoder();
+        User sqlUser = userService.getOne(new LambdaQueryWrapper<User>().eq(User::getUsername, loginForm.getUsername()));
+
+        System.out.println(sqlUser.getPassword());
+        System.out.println(bCryptPasswordEncoder.encode(loginForm.getPassword()));
+        if (sqlUser.getUsername()!=null){
+            if (bCryptPasswordEncoder.matches(sqlUser.getPassword(),loginForm.getPassword())){
+                System.out.println("来到炸裂");
+                return JwtUtil.sign(sqlUser.getUsername(), sqlUser.getUid());
+            }else {
+                return  "密码错误";
+            }
+
+        }else {
+            return "用户不存在";
+        }
+
     }
 
-    @GetMapping("/register")
-    public String toRegister(){
-        return "register";
-    }
 
     /**
+     * 注册
      * 注册业务
      *
      * @param registerForm 注册表单
-     * @param model        模型
      * @return {@link String}
      */
     @PostMapping("/register")
-    public String register(RegisterForm registerForm,Model model){
+    public String register(RegisterForm registerForm ){
         KuangUtils.print("注册表单信息："+registerForm.toString());
         // 表单密码重复判断
+        HashMap model=new HashMap();
         if (!registerForm.getPassword().equals(registerForm.getRepassword())){
-            model.addAttribute("registerMsg","密码输入有误");
+            model.put("registerMsg","密码输入有误");
             return "register";
         }
         // 用户名已存在
         User hasUser = userService.getOne(new QueryWrapper<User>().eq("username", registerForm.getUsername()));
         if (hasUser!=null){
-            model.addAttribute("registerMsg","用户名已存在");
+            model.put("registerMsg","用户名已存在");
             return "register";
         }
 
         // 验证邀请码
         Invite invite = inviteService.getOne(new QueryWrapper<Invite>().eq("code", registerForm.getCode()));
         if (invite==null){
-            model.addAttribute("registerMsg","邀请码不存在");
+            model.put("registerMsg","邀请码不存在");
             return "register";
         }else {
             // 邀请码存在，判断邀请码是否有效
             if (invite.getStatus()==1){
-                model.addAttribute("registerMsg","邀请码已被使用");
+                model.put("registerMsg","邀请码已被使用");
                 return "register";
             }else {
                 // 构建用户对象
