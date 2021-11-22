@@ -2,6 +2,8 @@ package com.kuang.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
+
+import java.io.Serial;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
@@ -27,6 +29,7 @@ import lombok.experimental.Accessors;
 @Schema(name="User对象", description="")
 public class User extends Model<User> implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @Schema(name = "自增id")

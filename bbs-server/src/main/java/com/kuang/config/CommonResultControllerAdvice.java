@@ -16,6 +16,7 @@ import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
+import javax.annotation.Priority;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -25,6 +26,7 @@ import javax.validation.constraints.NotNull;
  */
 @ControllerAdvice("com.kuang.controller")
 @Slf4j
+@Priority(1)
 public class CommonResultControllerAdvice implements ResponseBodyAdvice<Object> {
 
     @Override
