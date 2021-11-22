@@ -37,7 +37,7 @@ export default {
     }
   }, methods: {
     loginAjax() {
-      loginPost(this.form).then((data) => {
+      loginPost(this.form.username,this.form.password).then((data) => {
         console.log(data)
       }).catch((err) => {
         console.log(err)

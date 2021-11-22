@@ -1,6 +1,6 @@
 import http from '@/utils/http'
 
 
-export const loginPost=(data) => {
-  return http.post("/login",data)
+export const loginPost=(username,password) => {
+  return http.post(`/login?username=${username}&password=${password}`)
 }

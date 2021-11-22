@@ -58,7 +58,7 @@ public class JwtUtil {
             Map<String, Claim> result;
             System.out.println(jwt.getClaims());
             result = jwt.getClaims();
-            System.out.println("userid=" + result.get("userId"));
+
             return result.get("userId").toString();
         } catch (JWTDecodeException e) {
             return null;

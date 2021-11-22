@@ -41,14 +41,14 @@ public class LoginController {
 
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginForm loginForm){
+    public String login( @RequestParam("username") String username,@RequestParam("password") String password){
         BCryptPasswordEncoder bCryptPasswordEncoder=new BCryptPasswordEncoder();
-        User sqlUser = userService.getOne(new LambdaQueryWrapper<User>().eq(User::getUsername, loginForm.getUsername()));
+        User sqlUser = userService.getOne(new LambdaQueryWrapper<User>().eq(User::getUsername, username));
 
         System.out.println(sqlUser.getPassword());
-        System.out.println(bCryptPasswordEncoder.encode(loginForm.getPassword()));
+        System.out.println(bCryptPasswordEncoder.encode(password));
         if (sqlUser.getUsername()!=null){
-            if (bCryptPasswordEncoder.matches(loginForm.getPassword(),sqlUser.getPassword())){
+            if (bCryptPasswordEncoder.matches(password,sqlUser.getPassword())){
 
                 return JwtUtil.sign(sqlUser.getUsername(), sqlUser.getUid());
             }else {

@@ -1,6 +1,7 @@
 package com.kuang.config;
 
 import com.kuang.result.BaseResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,6 +24,7 @@ import javax.validation.constraints.NotNull;
  * @author johnniang
  */
 @ControllerAdvice("com.kuang.controller")
+@Slf4j
 public class CommonResultControllerAdvice implements ResponseBodyAdvice<Object> {
 
     @Override
@@ -61,7 +63,7 @@ public class CommonResultControllerAdvice implements ResponseBodyAdvice<Object> 
         ServerHttpResponse response) {
         // Get return body
         Object returnBody = bodyContainer.getValue();
-
+        log.info("重写json中");
         if (returnBody instanceof BaseResponse<?> baseResponse) {
             // If the return body is instance of BaseResponse, then just do nothing
             HttpStatus status = HttpStatus.resolve(baseResponse.getCode());

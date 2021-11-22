@@ -33,7 +33,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (flag) {
 
             assert userId != null;
-            User user = UserUtil.getUserByUserCode(Integer.parseInt(userId));
+            User user = UserUtil.getUserByUserCode(userId);
 
             int level = 0;
 
