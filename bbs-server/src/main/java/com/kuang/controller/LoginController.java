@@ -48,8 +48,8 @@ public class LoginController {
         System.out.println(sqlUser.getPassword());
         System.out.println(bCryptPasswordEncoder.encode(loginForm.getPassword()));
         if (sqlUser.getUsername()!=null){
-            if (bCryptPasswordEncoder.matches(sqlUser.getPassword(),loginForm.getPassword())){
-                System.out.println("来到炸裂");
+            if (bCryptPasswordEncoder.matches(loginForm.getPassword(),sqlUser.getPassword())){
+
                 return JwtUtil.sign(sqlUser.getUsername(), sqlUser.getUid());
             }else {
                 return  "密码错误";
@@ -70,7 +70,7 @@ public class LoginController {
      * @return {@link String}
      */
     @PostMapping("/register")
-    public String register(RegisterForm registerForm ){
+    public String register(@RequestBody RegisterForm registerForm ){
         KuangUtils.print("注册表单信息："+registerForm.toString());
         // 表单密码重复判断
         HashMap model=new HashMap();

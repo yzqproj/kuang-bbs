@@ -29,9 +29,8 @@ public class DownloadController {
 
     @GetMapping({"/download"})
     public List<Download> download( ){
-        List<Download> downloadList = downloadService.list();
 
-        return downloadList;
+        return downloadService.list();
     }
 
 }

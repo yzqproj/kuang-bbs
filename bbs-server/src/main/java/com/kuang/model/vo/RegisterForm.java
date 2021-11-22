@@ -16,16 +16,16 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class RegisterForm {
 
-    @Schema(name = "用户名")
+    @Schema(title = "用户名")
     private String username;
 
-    @Schema(name = "密码")
+    @Schema(title = "密码")
     private String password;
 
-    @Schema(name = "确认密码")
+    @Schema(title = "确认密码")
     private String repassword;
 
-    @Schema(name = "邀请码")
+    @Schema(title = "邀请码")
     private String code;
 
 }
