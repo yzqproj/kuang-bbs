@@ -56,6 +56,7 @@ public class JwtUtil {
         try {
             DecodedJWT jwt = JWT.decode(token);
             Map<String, Claim> result;
+            System.out.println("这是claims");
             System.out.println(jwt.getClaims());
             result = jwt.getClaims();
 
@@ -64,6 +65,20 @@ public class JwtUtil {
             return null;
         }
     }
+    public static String getUsername(String token) {
+        try {
+            DecodedJWT jwt = JWT.decode(token);
+            Map<String, Claim> result;
+            System.out.println("这是claims");
+            System.out.println(jwt.getClaims());
+            result = jwt.getClaims();
+
+            return result.get("username").toString();
+        } catch (JWTDecodeException e) {
+            return null;
+        }
+    }
+
 
     public static boolean verifyToken(String token) {
         try {

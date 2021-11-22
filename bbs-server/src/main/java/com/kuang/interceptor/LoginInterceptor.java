@@ -29,11 +29,11 @@ public class LoginInterceptor implements HandlerInterceptor {
 
         log.info("token=" + token);
         boolean flag = JwtUtil.verifyToken(token);
-        String userId = JwtUtil.getUserId(token);
+        String userId = JwtUtil.getUsername(token);
         if (flag) {
 
             assert userId != null;
-            User user = UserUtil.getUserByUserCode(userId);
+            User user = UserUtil.getUserByName(userId);
 
             int level = 0;
 

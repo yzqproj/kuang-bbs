@@ -1,7 +1,11 @@
 package com.kuang;
 
+import com.kuang.model.entity.User;
+import com.kuang.service.UserService;
+import com.kuang.utils.UserUtil;
 import org.junit.jupiter.api.Test;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import javax.annotation.Resource;
 
 /**
  * @author yanni
@@ -9,11 +13,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  * @modified By:
  */
 public class EncodePass {
+    @Resource
+    UserService userService;
     @Test
     void getCode(){
-        BCryptPasswordEncoder bCryptPasswordEncoder=new BCryptPasswordEncoder();
-        String b=bCryptPasswordEncoder.encode("123456");
-        System.out.println(b);
+
 
     }
+
 }

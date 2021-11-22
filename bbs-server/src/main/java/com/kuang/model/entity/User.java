@@ -25,8 +25,9 @@ import lombok.experimental.Accessors;
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("ks_user")
+
 @Schema(name="User对象", description="")
+@TableName("ks_user")
 public class User extends Model<User> implements Serializable {
 
     @Serial

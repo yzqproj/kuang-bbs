@@ -26,7 +26,7 @@ import javax.validation.constraints.NotNull;
  */
 @ControllerAdvice("com.kuang.controller")
 @Slf4j
-@Priority(1)
+
 public class CommonResultControllerAdvice implements ResponseBodyAdvice<Object> {
 
     @Override

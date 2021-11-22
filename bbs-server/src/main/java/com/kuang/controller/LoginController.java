@@ -12,9 +12,8 @@ import com.kuang.service.UserService;
 import com.kuang.utils.JwtUtil;
 import com.kuang.utils.KuangUtils;
 import com.kuang.model.vo.RegisterForm;
+import com.kuang.utils.RequestHelper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,21 +33,21 @@ public class LoginController {
     @Resource
     UserInfoService userInfoService;
 
-    @GetMapping({"/","/index"})
-    public String index(){
-        return "index";
-    }
 
+@GetMapping("/getUser")
+public User getUser(){
+    User sessionUser = RequestHelper.getSessionUser();
+    return  sessionUser;
+
+}
 
     @PostMapping("/login")
     public String login( @RequestParam("username") String username,@RequestParam("password") String password){
-        BCryptPasswordEncoder bCryptPasswordEncoder=new BCryptPasswordEncoder();
+
         User sqlUser = userService.getOne(new LambdaQueryWrapper<User>().eq(User::getUsername, username));
 
-        System.out.println(sqlUser.getPassword());
-        System.out.println(bCryptPasswordEncoder.encode(password));
         if (sqlUser.getUsername()!=null){
-            if (bCryptPasswordEncoder.matches(password,sqlUser.getPassword())){
+            if (Objects.equals(password, sqlUser.getPassword())){
 
                 return JwtUtil.sign(sqlUser.getUsername(), sqlUser.getUid());
             }else {
@@ -76,25 +75,25 @@ public class LoginController {
         HashMap model=new HashMap();
         if (!registerForm.getPassword().equals(registerForm.getRepassword())){
             model.put("registerMsg","密码输入有误");
-            return "register";
+            return "密码输入有误";
         }
         // 用户名已存在
         User hasUser = userService.getOne(new QueryWrapper<User>().eq("username", registerForm.getUsername()));
         if (hasUser!=null){
             model.put("registerMsg","用户名已存在");
-            return "register";
+            return "用户名已存在";
         }
 
         // 验证邀请码
         Invite invite = inviteService.getOne(new QueryWrapper<Invite>().eq("code", registerForm.getCode()));
         if (invite==null){
             model.put("registerMsg","邀请码不存在");
-            return "register";
+            return "邀请码不存在r";
         }else {
             // 邀请码存在，判断邀请码是否有效
             if (invite.getStatus()==1){
                 model.put("registerMsg","邀请码已被使用");
-                return "register";
+                return "邀请码已被使用r";
             }else {
                 // 构建用户对象
                 User user = new User();
@@ -102,8 +101,7 @@ public class LoginController {
                 user.setRoleId(2);
                 user.setUsername(registerForm.getUsername());
                 // 密码加密
-                String bCryptPassword = new BCryptPasswordEncoder().encode(registerForm.getPassword());
-                user.setPassword(bCryptPassword);
+                user.setPassword(registerForm.getPassword());
                 user.setGmtCreate(KuangUtils.getTime());
                 user.setLoginDate(KuangUtils.getTime());
                 // 保存对象！

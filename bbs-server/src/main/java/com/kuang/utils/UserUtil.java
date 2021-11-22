@@ -12,4 +12,9 @@ public class UserUtil {
         return u.selectOne(new QueryWrapper<>(u));
 
     }
+    public static  User getUserByName(String name){
+        User u=new User();
+        u.setUsername(name);
+        return u.selectOne(new QueryWrapper<>(u));
+    }
 }
