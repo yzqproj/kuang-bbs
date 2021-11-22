@@ -15,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
+
 /**
  * <p>
  *  前端控制器
@@ -23,16 +25,17 @@ import org.springframework.web.bind.annotation.*;
  * @author 遇见狂神说
  * @since 2020-06-29
  */
-@Controller
+@RestController
+@RequestMapping
 public class UserInfoController {
 
-    @Autowired
+    @Resource
     UserInfoService userInfoService;
-    @Autowired
+    @Resource
     BlogService blogService;
-    @Autowired
+    @Resource
     QuestionService questionService;
-    @Autowired
+    @Resource
     CommentService commentService;
 
     // 更新用户资料

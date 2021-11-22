@@ -7,12 +7,15 @@ import com.kuang.model.entity.Blog;
 import com.kuang.model.entity.BlogCategory;
 import com.kuang.service.BlogCategoryService;
 import com.kuang.service.BlogService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -23,25 +26,25 @@ import java.util.List;
  * @author 遇见狂神说
  * @since 2020-06-29
  */
-@Controller
+@RestController
+@RequestMapping
 public class BlogCategoryController {
 
-    @Autowired
+    @Resource
     BlogCategoryService blogCategoryService;
-    @Autowired
+    @Resource
     BlogService blogService;
 
     @GetMapping("/blog/category/{bid}/{page}/{limit}")
-    public String blogPage(
+    public HashMap<String,Object> blogPage(
             @PathVariable int bid,
             @PathVariable int page,
-            @PathVariable int limit,
-            Model model) {
+            @PathVariable int limit ) {
 
         if (page < 1) {
             page = 1;
         }
-
+        HashMap<String, Object> model=new HashMap<>();
         // 查询这个分类下的所有问题，获取查询的数据信息
         Page<Blog> pageParam = new Page<>(page, limit);
         blogService.page(pageParam, new QueryWrapper<Blog>()
@@ -49,18 +52,18 @@ public class BlogCategoryController {
 
         List<Blog> records = pageParam.getRecords();
 
-        model.addAttribute("blogList", records);
-        model.addAttribute("pageParam", pageParam);
+        model.put("blogList", records);
+        model.put("pageParam", pageParam);
 
         // 查询这个分类信息
         BlogCategory category = blogCategoryService.getById(bid);
-        model.addAttribute("thisCategoryName", category.getCategory());
+        model.put("thisCategoryName", category.getCategory());
 
         // 全部分类信息
         List<BlogCategory> categoryList = blogCategoryService.list(null);
-        model.addAttribute("categoryList", categoryList);
+        model.put("categoryList", categoryList);
 
-        return "blog/list";
+        return model;
     }
 }
 

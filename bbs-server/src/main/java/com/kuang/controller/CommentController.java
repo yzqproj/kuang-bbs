@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 
 /**
  * <p>
@@ -17,10 +20,10 @@ import org.springframework.web.bind.annotation.PathVariable;
  * @author 遇见狂神说
  * @since 2020-06-30
  */
-@Controller
+@RestController
 public class CommentController {
 
-    @Autowired
+    @Resource
     CommentService commentService;
 
     // 删除评论

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -22,12 +23,13 @@ import java.util.List;
  * @author 遇见狂神说
  * @since 2020-06-28
  */
-@Controller
+@RestController
+@RequestMapping
 public class QuestionCategoryController {
 
-    @Autowired
+    @Resource
     QuestionCategoryService questionCategoryService;
-    @Autowired
+    @Resource
     QuestionService questionService;
 
     @GetMapping("/question/category/{cid}/{page}/{limit}")

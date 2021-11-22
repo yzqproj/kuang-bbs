@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,16 +32,17 @@ import java.util.List;
  * @author 遇见狂神说
  * @since 2020-06-28
  */
-@Controller
+@RestController
+@RequestMapping
 public class UserController {
 
-    @Autowired
+    @Resource
     UserInfoService userInfoService;
-    @Autowired
+    @Resource
     BlogService blogService;
-    @Autowired
+    @Resource
     QuestionService questionService;
-    @Autowired
+    @Resource
     CommentService commentService;
 
     @GetMapping("/user/{uid}")

@@ -19,10 +19,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,40 +37,26 @@ import java.util.UUID;
  * @author 遇见狂神说
  * @since 2020-06-28
  */
-@Controller
+@RestController
+@RequestMapping
 public class QuestionController {
 
-    @Autowired
+    @Resource
     QuestionCategoryService questionCategoryService;
-    @Autowired
+    @Resource
     QuestionService questionService;
-    @Autowired
+    @Resource
     CommentService commentService;
 
 
     // 问题列表展示
-    @GetMapping("/question")
-    public String questionList(Model model){
-        Page<Question> pageParam = new Page<>(1, 10);
-        questionService.page(pageParam,new QueryWrapper<Question>().orderByDesc("gmt_create"));
-        // 结果
-        List<Question> questionList = pageParam.getRecords();
-        model.addAttribute("questionList",questionList);
-        model.addAttribute("pageParam",pageParam);
 
-        // 分类信息
-        List<QuestionCategory> categoryList = questionCategoryService.list(null);
-        model.addAttribute("categoryList",categoryList);
 
-        return "question/list";
-    }
-
-    @GetMapping("/question/{page}/{limit}")
-    public String questionListPage(
+    @GetMapping("/questionList/{page}/{limit}")
+    public HashMap questionListPage(
             @PathVariable int page,
-            @PathVariable int limit,
-            Model model){
-
+            @PathVariable int limit ){
+HashMap model=new HashMap();
         if (page < 1){
             page = 1;
         }
@@ -77,22 +65,26 @@ public class QuestionController {
 
         // 结果
         List<Question> questionList = pageParam.getRecords();
-        model.addAttribute("questionList",questionList);
-        model.addAttribute("pageParam",pageParam);
+        model.put("questionList",questionList);
+        model.put("pageParam",pageParam);
 
         // 分类信息
         List<QuestionCategory> categoryList = questionCategoryService.list(null);
-        model.addAttribute("categoryList",categoryList);
+        model.put("categoryList",categoryList);
 
-        return "question/list";
+        return model;
     }
 
-    // 发布问题
-    @GetMapping("/question/write")
-    public String toWrite(Model model){
+    /**
+     * 发布问题
+     *
+     * @return {@link Object}
+     */
+    @GetMapping("/question/category")
+    public Object toWrite( ){
         List<QuestionCategory> categoryList = questionCategoryService.list(null);
-        model.addAttribute("categoryList",categoryList);
-        return "question/write";
+
+        return categoryList;
     }
 
     @PostMapping("/question/write")
@@ -125,16 +117,17 @@ public class QuestionController {
 
     // 阅读问题
     @GetMapping("/question/read/{qid}")
-    public String read(@PathVariable("qid") String qid,Model model){
+    public HashMap read(@PathVariable("qid") String qid ){
+        HashMap model=new HashMap();
         Question question = questionService.getOne(new QueryWrapper<Question>().eq("qid", qid));
         // todo: redis缓存. 防止阅读重复
         question.setViews(question.getViews()+1);
         questionService.updateById(question);
-        model.addAttribute("question",question);
+        model.put("question",question);
         // todo： 查询评论.
         List<Comment> commentList = commentService.list(new QueryWrapper<Comment>().eq("topic_id", qid).orderByDesc("gmt_create"));
-        model.addAttribute("commentList",commentList);
-        return "question/read";
+        model.put("commentList",commentList);
+        return model;
     }
 
     // 评论
@@ -156,18 +149,18 @@ public class QuestionController {
     // 编辑问题
     @GetMapping("/question/editor/{uid}/{qid}")
     public synchronized String toEditor(@PathVariable("uid") String uid,
-                           @PathVariable("qid") String qid,Model model){
-
+                           @PathVariable("qid") String qid ){
+HashMap model=new HashMap();
         Question question = questionService.getOne(new QueryWrapper<Question>().eq("qid", qid));
         if (!question.getAuthorId().equals(uid)){
             KuangUtils.print("禁止非法编辑");
             return "redirect:/question";
         }
 
-        model.addAttribute("question",question);
+        model.put("question",question);
 
         List<QuestionCategory> categoryList = questionCategoryService.list(null);
-        model.addAttribute("categoryList",categoryList);
+        model.put("categoryList",categoryList);
 
         return "question/editor";
     }
@@ -205,8 +198,8 @@ public class QuestionController {
 
     // md 文件上传
     @Operation(summary = "md文件上传问题")
-    @RequestMapping("/question/write/file/upload")
-    @ResponseBody
+    @PostMapping("/question/write/file/upload")
+
     public JSONObject fileUpload(@RequestParam(value = "editormd-image-file", required = true) MultipartFile file, HttpServletRequest request) throws IOException {
 
         //获得SpringBoot当前项目的路径：System.getProperty("user.dir")

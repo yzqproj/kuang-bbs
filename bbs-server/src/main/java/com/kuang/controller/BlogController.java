@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,40 +29,25 @@ import java.util.List;
  * @author 遇见狂神说
  * @since 2020-06-29
  */
-@Controller
+@RestController
+@RequestMapping
 public class BlogController {
 
-    @Autowired
+    @Resource
     BlogCategoryService blogCategoryService;
-    @Autowired
+    @Resource
     BlogService blogService;
-    @Autowired
+    @Resource
     CommentService commentService;
 
-    // 列表展示
-    @GetMapping("/blog")
-    public String blogList(Model model) {
 
-        Page<Blog> pageParam = new Page<>(1, 10);
-        blogService.page(pageParam, new QueryWrapper<Blog>().orderByDesc("gmt_create"));
-        // 结果
-        List<Blog> blogList = pageParam.getRecords();
-        model.addAttribute("blogList", blogList);
-        model.addAttribute("pageParam", pageParam);
-
-        // 分类信息
-        List<BlogCategory> categoryList = blogCategoryService.list(null);
-        model.addAttribute("categoryList", categoryList);
-
-        return "blog/list";
-    }
-
-    @GetMapping("/blog/{page}/{limit}")
-    public String blogListPage(
+    @GetMapping("/blogList/{page}/{limit}")
+    public HashMap blogListPage(
             @PathVariable int page,
-            @PathVariable int limit,
-            Model model) {
-
+            @PathVariable int limit
+    ) {
+        HashMap<String, Object> model = new HashMap<>();
+        ;
         if (page < 1) {
             page = 1;
         }
@@ -70,26 +56,27 @@ public class BlogController {
 
         // 结果
         List<Blog> blogList = pageParam.getRecords();
-        model.addAttribute("blogList", blogList);
-        model.addAttribute("pageParam", pageParam);
+        model.put("blogList", blogList);
+        model.put("pageParam", pageParam);
 
         // 分类信息
         List<BlogCategory> categoryList = blogCategoryService.list(null);
-        model.addAttribute("categoryList", categoryList);
+        model.put("categoryList", categoryList);
 
-        return "blog/list";
+        return model;
     }
 
     // 写文章
     @GetMapping("/blog/write")
-    public String toWrite(Model model) {
+    public HashMap toWrite() {
+        HashMap model = new HashMap();
         List<BlogCategory> categoryList = blogCategoryService.list(null);
-        model.addAttribute("categoryList", categoryList);
-        return "blog/write";
+        model.put("categoryList", categoryList);
+        return model;
     }
 
     @PostMapping("/blog/write")
-    public synchronized String write(QuestionWriteForm questionWriteForm) {
+    public synchronized HashMap write(QuestionWriteForm questionWriteForm) {
         // 构建问题对象
         Blog blog = new Blog();
 
@@ -112,45 +99,51 @@ public class BlogController {
         blogService.save(blog);
 
         // 重定向到列表页面
-        return "redirect:/blog";
+        return null;
     }
 
-    // 阅读文章
+    /**
+     * 阅读文章
+     *
+     * @param bid 报价
+     * @return {@link HashMap}
+     */
     @GetMapping("/blog/read/{bid}")
-    public String read(@PathVariable("bid") String bid, Model model) {
+    public HashMap read(@PathVariable("bid") String bid) {
+        HashMap model = new HashMap();
         Blog blog = blogService.getOne(new QueryWrapper<Blog>().eq("bid", bid));
         // todo: redis缓存. 防止阅读重复
         blog.setViews(blog.getViews() + 1);
         blogService.updateById(blog);
-        model.addAttribute("blog", blog);
+        model.put("blog", blog);
         // todo： 查询评论
         List<Comment> commentList = commentService.list(new QueryWrapper<Comment>().eq("topic_id", bid).orderByDesc("gmt_create"));
-        model.addAttribute("commentList", commentList);
-        return "blog/read";
+        model.put("commentList", commentList);
+        return model;
     }
 
     // 编辑问题
     @GetMapping("/blog/editor/{uid}/{bid}")
-    public synchronized String toEditor(@PathVariable("uid") String uid,
-                                        @PathVariable("bid") String bid, Model model) {
-
+    public synchronized HashMap toEditor(@PathVariable("uid") String uid,
+                                         @PathVariable("bid") String bid) {
+        HashMap model = new HashMap();
         Blog blog = blogService.getOne(new QueryWrapper<Blog>().eq("bid", bid));
 
         if (!blog.getAuthorId().equals(uid)) {
             KuangUtils.print("禁止非法编辑");
-            return "redirect:/blog";
+            return null;
         }
 
-        model.addAttribute("blog", blog );
+        model.put("blog", blog);
 
         List<BlogCategory> categoryList = blogCategoryService.list(null);
-        model.addAttribute("categoryList", categoryList);
+        model.put("categoryList", categoryList);
 
-        return "blog/editor";
+        return model;
     }
 
     @GetMapping("/blog/{blogId}")
-    @ResponseBody
+
     public HashMap<String, Object> getBlogById(@PathVariable("blogId") String blogId) {
 
         Blog blog = blogService.getOne(new QueryWrapper<Blog>().eq("bid", blogId));
