@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 
 import java.io.Serial;
+import java.sql.Timestamp;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
@@ -23,22 +24,19 @@ import lombok.experimental.Accessors;
  * @since 2020-06-28
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
-
 @Schema(name="User对象", description="")
 @TableName("ks_user")
-public class User extends Model<User> implements Serializable {
+public class User extends  Model<User>  implements Serializable {
+
 
     @Serial
-    private static final long serialVersionUID = 1L;
-
+    private static final long serialVersionUID = 2603954883132545471L;
     @Schema(name = "自增id")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
     @Schema(name = "用户编号")
-    private String uid;
+    private String userId;
 
     @Schema(name = "角色编号")
     private Integer roleId;
@@ -53,10 +51,10 @@ public class User extends Model<User> implements Serializable {
     private String avatar;
 
     @Schema(name = "登录时间")
-    private Date loginDate;
+    private Timestamp loginDate;
 
     @Schema(name = "创建时间")
-    private Date gmtCreate;
+    private Timestamp gmtCreate;
 
 
 }

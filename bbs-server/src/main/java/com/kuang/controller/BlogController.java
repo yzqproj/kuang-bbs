@@ -12,9 +12,6 @@ import com.kuang.service.CommentService;
 import com.kuang.utils.KuangUtils;
 import com.kuang.model.vo.QuestionWriteForm;
 import com.kuang.utils.RequestHelper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -147,7 +144,7 @@ public class BlogController {
     public HashMap<String, Object> getBlogById(@PathVariable("blogId") String blogId) {
 
         Blog blog = blogService.getOne(new QueryWrapper<Blog>().eq("bid", blogId));
-        String userId = RequestHelper.getSessionUser().getUid();
+        String userId = RequestHelper.getSessionUser().getUserId();
         if (!blog.getAuthorId().equals(userId)) {
             KuangUtils.print("禁止非法编辑");
             return null;

@@ -7,7 +7,7 @@ public class UserUtil {
     public static User getUserByUserCode(String userCode) {
 
          User u = new  User();
-        u.setUid(userCode);
+        u.setUserId(userCode);
 
         return u.selectOne(new QueryWrapper<>(u));
 

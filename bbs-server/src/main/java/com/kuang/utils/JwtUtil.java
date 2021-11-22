@@ -60,7 +60,7 @@ public class JwtUtil {
             System.out.println(jwt.getClaims());
             result = jwt.getClaims();
 
-            return result.get("userId").toString();
+            return result.get("userId").asString();
         } catch (JWTDecodeException e) {
             return null;
         }
@@ -72,8 +72,8 @@ public class JwtUtil {
             System.out.println("这是claims");
             System.out.println(jwt.getClaims());
             result = jwt.getClaims();
-
-            return result.get("username").toString();
+            System.out.println(result.get("username"));
+            return result.get("username").asString() ;
         } catch (JWTDecodeException e) {
             return null;
         }

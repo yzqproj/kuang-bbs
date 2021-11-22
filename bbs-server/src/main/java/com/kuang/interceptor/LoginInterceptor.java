@@ -1,6 +1,9 @@
 package com.kuang.interceptor;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.kuang.model.entity.User;
+import com.kuang.service.UserService;
 import com.kuang.utils.JwtUtil;
 import com.kuang.utils.UserUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,6 +24,8 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 @Slf4j
 public class LoginInterceptor implements HandlerInterceptor {
+    @Resource
+    UserService userService;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String token = request.getHeader("token");
@@ -29,11 +35,12 @@ public class LoginInterceptor implements HandlerInterceptor {
 
         log.info("token=" + token);
         boolean flag = JwtUtil.verifyToken(token);
-        String userId = JwtUtil.getUsername(token);
+        String userId = JwtUtil.getUserId(token);
         if (flag) {
 
             assert userId != null;
-            User user = UserUtil.getUserByName(userId);
+            User user = UserUtil.getUserByUserCode(userId);
+
 
             int level = 0;
 
@@ -63,11 +70,11 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
+
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
+
     }
 }

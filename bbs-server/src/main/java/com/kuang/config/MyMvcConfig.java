@@ -2,6 +2,7 @@ package com.kuang.config;
 
 import com.kuang.interceptor.CorsInterceptor;
 import com.kuang.interceptor.LoginInterceptor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -15,11 +16,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class MyMvcConfig implements WebMvcConfigurer {
-
+@Bean
+public LoginInterceptor getLogin(){
+    return  new LoginInterceptor();
+}
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new CorsInterceptor()).addPathPatterns("/**");
-        registry.addInterceptor(new LoginInterceptor()).addPathPatterns("/**").excludePathPatterns("/register","/login","/swagger-ui/**","/v3/**","/swagger-ui.html");
+        registry.addInterceptor(getLogin()).addPathPatterns("/**").excludePathPatterns("/register","/login","/swagger-ui/**","/v3/**","/swagger-ui.html");
     }
 
     @Override
