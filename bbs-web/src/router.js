@@ -6,6 +6,7 @@ import HomeQuestion from "@views/HomeQuestion.vue";
 import UserCenter from "@views/UserCenter.vue";
 import UserInfo from "@views/UserInfo.vue";
 import Login from "@views/Login.vue";
+import Register from "@views/Register.vue";
 
 Vue.use(VueRouter);
 
@@ -62,7 +63,11 @@ const routes = [
         path: '/login',
         name: 'Login',
         component: Login
-    }
+    },{
+        path: '/register',
+        name: 'Login',
+        component: Register
+    },
 ];
 
 const router = new VueRouter({

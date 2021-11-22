@@ -13,7 +13,7 @@
     </label>
   </div>
 
-  <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">登 录</button>
+  <b-btn class="btn btn-lg btn-primary btn-block mt-3"  @click="loginAjax">登 录</b-btn>
 
   <p class="clearfix">
     <a href="/register" class="float-right">没有账号？去注册</a>
@@ -32,6 +32,10 @@ export default {
         username:'yzqdev',
         password:'123456'
       }
+    }
+  },methods:{
+    loginAjax(){
+
     }
   }
 }
