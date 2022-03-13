@@ -18,28 +18,28 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("ks_invite")
-@Schema(name="Invite邀请码", description="邀请码")
+@Schema(title="Invite邀请码", description="邀请码")
 public class Invite implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(name = "自增id")
+    @Schema(title = "自增id")
     @TableId(value= "id", type = IdType.AUTO)
     private Integer id;
 
-    @Schema(name = "邀请码")
+    @Schema(title = "邀请码")
     private String code;
 
-    @Schema(name = "用户id")
+    @Schema(title = "用户id")
     private String uid;
 
-    @Schema(name = "状态 0 未使用 1 使用")
+    @Schema(title = "状态 0 未使用 1 使用")
     private Integer status;
 
-    @Schema(name = "激活时间")
+    @Schema(title = "激活时间")
     private Date activeTime;
 
-    @Schema(name = "创建时间")
+    @Schema(title = "创建时间")
     private Date gmtCreate;
 
 

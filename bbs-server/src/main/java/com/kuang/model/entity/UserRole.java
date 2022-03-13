@@ -22,22 +22,22 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("ks_user_role")
-@Schema(name="UserRole对象", description="")
+@Schema(title="UserRole对象", description="")
 public class UserRole implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(name = "角色编号")
+    @Schema(title = "角色编号")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @Schema(name = "角色名称")
+    @Schema(title = "角色名称")
     private String name;
 
-    @Schema(name = "角色描述")
+    @Schema(title = "角色描述")
     private String description;
 
-    @Schema(name = "创建时间")
+    @Schema(title = "创建时间")
     private Date gmtCreate;
 
 

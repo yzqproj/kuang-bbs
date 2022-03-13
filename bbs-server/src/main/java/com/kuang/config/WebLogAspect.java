@@ -8,6 +8,7 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -27,14 +28,18 @@ public class WebLogAspect {
 
     private ThreadLocal<Long> startTime = new ThreadLocal<>();
 
-    //使用@Pointcut定义一个切入点，可以是一个规则表达式，比如下例中某个package下的所有函数，也可以是一个注解等。
+    /**
+     * 使用@Pointcut定义一个切入点，可以是一个规则表达式，比如下例中某个package下的所有函数，也可以是一个注解等。
+     */
     @Pointcut("execution(public * com.kuang.controller.*.*(..))")
     public void webLog() {
     }
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
-    //使用@Before在切入点开始处切入内容
+    /**
+     * 使用@Before在切入点开始处切入内容
+     */
     @Before("webLog()")
     public void doBefore(JoinPoint joinPoint) throws Throwable {
         startTime.set(System.currentTimeMillis());
@@ -44,7 +49,7 @@ public class WebLogAspect {
         HttpServletRequest request = attributes.getRequest();
 
         // 记录下请求内容
-        log.info("请求URL : " + request.getRequestURL().toString());
+        log.debug( "请求URL :  " +request.getRequestURL().toString());
         log.info("请求HTTP_METHOD : " + request.getMethod());
         log.info("请求IP : " + request.getRemoteAddr());
         log.info("请求CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());

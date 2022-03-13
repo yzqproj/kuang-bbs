@@ -10,16 +10,16 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class LayerPhotoData {
 
-    @Schema(name = "图片名")
+    @Schema(title = "图片名")
     private String alt;
 
-    @Schema(name = "图片id")
+    @Schema(title = "图片id")
     private int pid;
 
-    @Schema(name = "原图地址")
+    @Schema(title = "原图地址")
     private String src;
 
-    @Schema(name = "缩略图地址")
+    @Schema(title = "缩略图地址")
     private String thumb;
 
 }

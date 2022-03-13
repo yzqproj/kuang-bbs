@@ -9,19 +9,19 @@ import java.util.Map;
 
 @Data
 @AllArgsConstructor
-@Schema(name = "全局统一返回结果")
+@Schema(title = "全局统一返回结果")
 public class BaseResponse<T> {
 
-	@Schema(name = "是否成功")
+	@Schema(title = "是否成功")
 	private Boolean success;
 
-	@Schema(name = "返回码")
+	@Schema(title = "返回码")
 	private Integer code;
 
-	@Schema(name = "返回消息")
+	@Schema(title = "返回消息")
 	private String message;
 
-	@Schema(name = "返回数据")
+	@Schema(title = "返回数据")
 	private T data  ;
 
 

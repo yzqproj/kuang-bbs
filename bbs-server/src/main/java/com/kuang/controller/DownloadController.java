@@ -21,7 +21,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping
-@Schema(name = "下载")
+@Schema(title = "下载")
 public class DownloadController {
 
     @Resource

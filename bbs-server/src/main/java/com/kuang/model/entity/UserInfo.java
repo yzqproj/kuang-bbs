@@ -21,43 +21,43 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("ks_user_info")
-@Schema(name="UserInfo对象", description="")
+@Schema(title="UserInfo对象", description="")
 public class UserInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(name = "用户id")
+    @Schema(title = "用户id")
     @TableId(value = "uid", type = IdType.INPUT)
     private String uid;
 
-    @Schema(name = "用户昵称")
+    @Schema(title = "用户昵称")
     private String nickname;
 
-    @Schema(name = "真实姓名")
+    @Schema(title = "真实姓名")
     private String realname;
 
-    @Schema(name = "QQ")
+    @Schema(title = "QQ")
     private String qq;
 
-    @Schema(name = "WeChat")
+    @Schema(title = "WeChat")
     private String wechat;
 
-    @Schema(name = "邮箱")
+    @Schema(title = "邮箱")
     private String email;
 
-    @Schema(name = "手机")
+    @Schema(title = "手机")
     private String phone;
 
-    @Schema(name = "工作")
+    @Schema(title = "工作")
     private String work;
 
-    @Schema(name = "地址")
+    @Schema(title = "地址")
     private String address;
 
-    @Schema(name = "爱好")
+    @Schema(title = "爱好")
     private String hobby;
 
-    @Schema(name = "自我介绍")
+    @Schema(title = "自我介绍")
     private String intro;
 
 }

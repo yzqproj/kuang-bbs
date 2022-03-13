@@ -24,21 +24,21 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("ks_download")
-@Schema(name = "Download对象", description = "")
+@Schema(title = "Download对象", description = "")
 public class Download implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
-    @Schema(name = "id")
+    @Schema(title = "id")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
-    @Schema(name = "资源名")
+    @Schema(title = "资源名")
     private String dname;
 
-    @Schema(name = "资源链接")
+    @Schema(title = "资源链接")
     private String ddesc;
 
-    @Schema(name = "提取码")
+    @Schema(title = "提取码")
     private String dcode;
 
 

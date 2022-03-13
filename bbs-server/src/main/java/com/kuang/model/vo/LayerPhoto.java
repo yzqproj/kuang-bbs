@@ -12,16 +12,16 @@ import java.util.List;
 @Accessors(chain = true)
 public class LayerPhoto {
 
-    @Schema(name = "相册标题")
+    @Schema(title = "相册标题")
     private String title;
 
-    @Schema(name = "相册id")
+    @Schema(title = "相册id")
     private int id;
 
-    @Schema(name = "初始显示的图片序号，默认0")
+    @Schema(title = "初始显示的图片序号，默认0")
     private int start;
 
-    @Schema(name = "相册包含的图片，数组格式")
+    @Schema(title = "相册包含的图片，数组格式")
     private List<LayerPhotoData> data;
 
 }

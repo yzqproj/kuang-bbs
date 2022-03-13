@@ -87,6 +87,7 @@ public class JwtUtil {
             DecodedJWT jwt = verifier.verify(token);
             return true;
         } catch (IllegalArgumentException | JWTVerificationException e) {
+            e.printStackTrace();
             return false;
         }
 

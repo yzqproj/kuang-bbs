@@ -24,36 +24,36 @@ import lombok.experimental.Accessors;
  * @since 2020-06-28
  */
 @Data
-@Schema(name="User对象", description="")
+@Schema(title="User对象", description="")
 @TableName("ks_user")
 public class User extends  Model<User>  implements Serializable {
 
 
     @Serial
     private static final long serialVersionUID = 2603954883132545471L;
-    @Schema(name = "自增id")
+    @Schema(title = "自增id")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @Schema(name = "用户编号")
+    @Schema(title = "用户编号")
     private String userId;
 
-    @Schema(name = "角色编号")
+    @Schema(title = "角色编号")
     private Integer roleId;
 
-    @Schema(name = "用户名")
+    @Schema(title = "用户名")
     private String username;
 
-    @Schema(name = "密码")
+    @Schema(title = "密码")
     private String password;
 
-    @Schema(name = "头像")
+    @Schema(title = "头像")
     private String avatar;
 
-    @Schema(name = "登录时间")
+    @Schema(title = "登录时间")
     private Timestamp loginDate;
 
-    @Schema(name = "创建时间")
+    @Schema(title = "创建时间")
     private Timestamp gmtCreate;
 
 

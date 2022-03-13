@@ -21,16 +21,16 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("ks_question_category")
-@Schema(name="QuestionCategory对象", description="")
+@Schema(title="QuestionCategory对象", description="")
 public class QuestionCategory implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(name = "自增id")
+    @Schema(title = "自增id")
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    @Schema(name = "问题分类")
+    @Schema(title = "问题分类")
     private String category;
 
 

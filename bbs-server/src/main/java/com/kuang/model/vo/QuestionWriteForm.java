@@ -10,19 +10,19 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class QuestionWriteForm {
 
-    @Schema(name = "问题标题")
+    @Schema(title = "问题标题")
     private String title;
-    @Schema(name = "问题内容")
+    @Schema(title = "问题内容")
     private String content;
 
-    @Schema(name = "问题分类id")
+    @Schema(title = "问题分类id")
     private Integer categoryId;
 
-    @Schema(name = "作者id")
+    @Schema(title = "作者id")
     private String authorId;
-    @Schema(name = "作者名称")
+    @Schema(title = "作者名称")
     private String authorName;
-    @Schema(name = "作者头像")
+    @Schema(title = "作者头像")
     private String authorAvatar;
 
 }
