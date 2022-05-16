@@ -28,7 +28,7 @@ public class Say implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Schema(title = "唯一id")
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
 
     @Schema(title = "标题")

@@ -28,8 +28,8 @@ public class UserRole implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Schema(title = "角色编号")
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private String id;
 
     @Schema(title = "角色名称")
     private String name;

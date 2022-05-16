@@ -27,8 +27,8 @@ public class BlogCategory implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Schema(title = "自增id")
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private String id;
 
     @Schema(title = "博客分类")
     private String category;

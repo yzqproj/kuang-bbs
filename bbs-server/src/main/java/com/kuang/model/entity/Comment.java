@@ -31,8 +31,8 @@ public class Comment implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Schema(title = "自增id")
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private String id;
 
     @Schema(title = "评论唯一id")
     private String commentId;

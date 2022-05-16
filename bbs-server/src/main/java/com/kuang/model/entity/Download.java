@@ -30,8 +30,8 @@ public class Download implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
     @Schema(title = "id")
-    @TableId(value = "id", type = IdType.AUTO)
-    private Integer id;
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private String id;
     @Schema(title = "资源名")
     private String dname;
 
